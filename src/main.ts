@@ -71,7 +71,12 @@ export default class MultipleDailyNotes extends Plugin {
 		await this.loadSettings();
 
 		this.addSettingTab(new SettingsTab(this.app, this));
-		this.registerCliHandlers();
+
+		
+		// Min Obsidian version for plugin is 0.15.0, CLI handlers will only load if the function exists aka Obsidian version is >= 1.12.2
+		if(typeof this.registerCliHandlers === "function") {
+			this.registerCliHandlers();
+		}
 
 		for (const config of this.settings.settings) {
 			this.addRibbonIcon(
